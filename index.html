@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Missing Diamond Case</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Crimson+Pro:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ░░ NOISE OVERLAY ░░ -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- ░░ SCANLINE EFFECT ░░ -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 — HERO / INTRO
+  ══════════════════════════════════════ -->
+  <section id="hero-section" class="section hero-section">
+    <div class="hero-bg-grid" aria-hidden="true"></div>
+
+    <div class="hero-badge">CLASSIFIED — CASE #1947</div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="dot pulse-dot"></span>
+        <span>DETECTIVE BUREAU — ACTIVE INVESTIGATION</span>
+        <span class="dot pulse-dot"></span>
+      </div>
+
+      <h1 class="hero-title" id="hero-title">
+        <span class="title-line-1">THE MISSING</span>
+        <span class="title-line-2">DIAMOND</span>
+        <span class="title-line-3">CASE</span>
+      </h1>
+
+      <div class="hero-divider" aria-hidden="true">
+        <span class="divider-line"></span>
+        <span class="divider-icon">◆</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <p class="hero-description" id="hero-description">
+        The Vandermeer Diamond — 84 carats, priceless, irreplaceable — vanished from the 
+        Blackwood Estate gala on the night of November 3rd. Three suspects. One truth. 
+        The city holds its breath. <em>You are the only one who can crack this case.</em>
+      </p>
+
+      <div class="hero-meta">
+        <div class="meta-item">
+          <span class="meta-label">CASE STATUS</span>
+          <span class="meta-value status-open">OPEN</span>
+        </div>
+        <div class="meta-divider" aria-hidden="true">|</div>
+        <div class="meta-item">
+          <span class="meta-label">FILED</span>
+          <span class="meta-value">NOV 3, 1947</span>
+        </div>
+        <div class="meta-divider" aria-hidden="true">|</div>
+        <div class="meta-item">
+          <span class="meta-label">PRIORITY</span>
+          <span class="meta-value priority-critical">CRITICAL</span>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#suspects-section" class="btn btn-primary" id="start-btn">
+          <span class="btn-icon">▶</span>
+          START INVESTIGATION
+          <span class="btn-glow" aria-hidden="true"></span>
+        </a>
+        <a href="#clues-section" class="btn btn-ghost">
+          VIEW EVIDENCE
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-corner hero-corner--tl" aria-hidden="true">
+      <span></span><span></span>
+    </div>
+    <div class="hero-corner hero-corner--br" aria-hidden="true">
+      <span></span><span></span>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span class="scroll-label">SCROLL TO DESCEND</span>
+      <span class="scroll-arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 — SUSPECTS
+  ══════════════════════════════════════ -->
+  <section id="suspects-section" class="section suspects-section">
+    <div class="section-header">
+      <div class="section-tag">PERSONS OF INTEREST</div>
+      <h2 class="section-title">SUSPECTS</h2>
+      <p class="section-subtitle">
+        Three individuals were present at the estate during the theft window. 
+        Examine each dossier carefully. Motive. Means. Opportunity.
+      </p>
+    </div>
+
+    <!-- JS will populate this container -->
+    <div id="suspects-container" class="suspects-container" role="list" aria-label="Suspects list">
+      <!-- Dynamic suspect cards injected here -->
+      <div class="suspects-placeholder" aria-hidden="true">
+        <span class="placeholder-icon">👤</span>
+        <span class="placeholder-text">Loading suspect files...</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 — CLUES / EVIDENCE BOARD
+  ══════════════════════════════════════ -->
+  <section id="clues-section" class="section clues-section">
+    <div class="section-header">
+      <div class="section-tag">FORENSIC ANALYSIS</div>
+      <h2 class="section-title">EVIDENCE BOARD</h2>
+      <p class="section-subtitle">
+        Physical and testimonial evidence collected from the Blackwood Estate. 
+        Study every detail. Nothing is coincidence.
+      </p>
+    </div>
+
+    <!-- Evidence board background dressing -->
+    <div class="evidence-board">
+      <div class="board-header">
+        <span class="board-label">CASE #1947 — EVIDENCE LOG</span>
+        <span class="board-timestamp">LAST UPDATED: 03-NOV — 23:47</span>
+      </div>
+
+      <div class="board-pins" aria-hidden="true">
+        <span class="pin pin--tl"></span>
+        <span class="pin pin--tr"></span>
+        <span class="pin pin--bl"></span>
+        <span class="pin pin--br"></span>
+      </div>
+
+      <!-- JS will populate this -->
+      <div id="clues-container" class="clues-container" role="list" aria-label="Clues and evidence">
+        <!-- Dynamic clue cards injected here -->
+        <div class="clues-placeholder" aria-hidden="true">
+          <span class="placeholder-icon">🔍</span>
+          <span class="placeholder-text">Analysing crime scene data...</span>
+        </div>
+      </div>
+
+      <!-- Static decorative string lines -->
+      <svg class="board-strings" aria-hidden="true" viewBox="0 0 900 200" preserveAspectRatio="none">
+        <line x1="120" y1="20" x2="450" y2="80" stroke="#ff1a1a" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.35"/>
+        <line x1="450" y1="80" x2="780" y2="30" stroke="#ff1a1a" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.35"/>
+        <line x1="250" y1="15" x2="650" y2="60" stroke="#ff6600" stroke-width="0.6" stroke-dasharray="2,6" opacity="0.25"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 4 — INTERROGATION
+  ══════════════════════════════════════ -->
+  <section id="interrogation-section" class="section interrogation-section">
+    <div class="section-header">
+      <div class="section-tag">ROOM 4 — BLACKWOOD PRECINCT</div>
+      <h2 class="section-title">INTERROGATION</h2>
+      <p class="section-subtitle">
+        Press the suspects. Watch for inconsistencies. Every word is a clue.
+      </p>
+    </div>
+
+    <div class="interrogation-frame">
+      <div class="interrogation-lamp" aria-hidden="true">
+        <div class="lamp-body"></div>
+        <div class="lamp-beam"></div>
+      </div>
+
+      <!-- JS will populate this -->
+      <div id="interrogation-container" class="interrogation-container" role="region" aria-label="Interrogation dialogue">
+        <!-- Dynamic dialogues injected here -->
+        <div class="interrogation-placeholder">
+          <div class="int-placeholder-icon">🎙️</div>
+          <p class="int-placeholder-text">Select a suspect to begin interrogation</p>
+          <div class="int-placeholder-hint">AWAITING SUSPECT — ROOM IS EMPTY</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 5 — FINAL ACCUSATION
+  ══════════════════════════════════════ -->
+  <section id="accusation-section" class="section accusation-section">
+    <div class="section-header">
+      <div class="section-tag">DETECTIVE'S VERDICT</div>
+      <h2 class="section-title">MAKE YOUR ACCUSATION</h2>
+      <p class="section-subtitle">
+        You have studied the evidence. You have heard the suspects. 
+        Only one truth remains. Choose carefully — there are no second chances.
+      </p>
+    </div>
+
+    <!-- JS will populate this -->
+    <div id="accusation-container" class="accusation-container" role="region" aria-label="Final accusation area">
+      <!-- Dynamic accusation buttons injected here -->
+      <div class="accusation-placeholder">
+        <div class="accusation-seal" aria-hidden="true">
+          <span class="seal-text">OFFICIAL</span>
+          <span class="seal-icon">⚖</span>
+          <span class="seal-text">VERDICT</span>
+        </div>
+        <p class="accusation-hint">Complete the investigation to unlock your accusation.</p>
+        <div class="accusation-warning">
+          ⚠ WARNING: A false accusation will let the criminal walk free.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 6 — RESULT
+  ══════════════════════════════════════ -->
+  <section id="result-section" class="section result-section">
+    <div class="section-header">
+      <div class="section-tag">CASE RESOLUTION</div>
+      <h2 class="section-title">VERDICT</h2>
+    </div>
+
+    <!-- JS will populate this -->
+    <div id="result-container" class="result-container" role="region" aria-label="Case result" aria-live="polite">
+      <!-- Will show "Case Solved" or "Criminal Escaped" -->
+      <div class="result-placeholder">
+        <div class="result-badge-ring" aria-hidden="true">
+          <div class="result-badge-inner">
+            <span class="result-badge-icon">?</span>
+          </div>
+        </div>
+        <p class="result-await-text">THE JURY AWAITS YOUR ACCUSATION</p>
+        <div class="result-dots" aria-hidden="true">
+          <span class="rdot"></span>
+          <span class="rdot"></span>
+          <span class="rdot"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer class="site-footer" id="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-logo">◆ BLACKWOOD DETECTIVE BUREAU</span>
+        <span class="footer-copy">CASE #1947 — CLASSIFIED DOCUMENT</span>
+      </div>
+      <div class="footer-right">
+        <span class="footer-stat">CASE OPEN</span>
+        <span class="footer-sep">|</span>
+        <span class="footer-stat">SUSPECT COUNT: 3</span>
+        <span class="footer-sep">|</span>
+        <span class="footer-stat">EVIDENCE ITEMS: <span id="footer-clue-count">—</span></span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
