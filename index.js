@@ -1,3 +1,5 @@
+//---------------------suspects---------------------------
+
 const suspects = [
   {
     id: 1,
@@ -61,6 +63,61 @@ suspects.forEach((suspect) => {
             ${suspect.motive}
         </p>
         <button class="suspect-card__btn">INVESTIGATE</button>
+   </div>
+`;
+});
+
+//-------------------cluess-------------------------
+
+const clues = [
+  {
+    number: "CLUE #01",
+    title: "Broken Watch",
+    description:
+      "A shattered pocket watch was discovered near the staircase. The hands stopped exactly at 9:07 PM.",
+    tag: "TIME EVIDENCE"
+  },
+
+  {
+    number: "CLUE #02",
+    title: "Fingerprint",
+    description:
+      "A partial fingerprint was found on the vault handle, but it appears intentionally smudged.",
+    tag: "FORENSICS"
+  },
+
+  {
+    number: "CLUE #03",
+    title: "Phone Logs",
+    description:
+      "A suspicious outgoing call was made minutes before the mansion blackout occurred.",
+    tag: "DIGITAL TRACE"
+  },
+
+  {
+    number: "CLUE #04",
+    title: "Shoe Print",
+    description:
+      "Mud-covered shoe prints were discovered leading toward the estate’s rear entrance.",
+    tag: "CRIME SCENE"
+  }
+];
+const cluesContainer=document.getElementById("clues-container");
+clues.forEach((clue) => {
+    cluesContainer.innerHTML += `
+   <div class="clue-card">
+        <p class="clue-card__number">
+            ${clue.number}
+        </p>
+        <h2 class="clue-card__title">
+            ${clue.title}
+        </h2>
+        <p class="clue-card__desc">
+            ${clue.description}
+        </p>
+        <p class="clue-card__tag">
+            ${clue.tag}
+        </p>
    </div>
 `;
 });
