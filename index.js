@@ -11,6 +11,8 @@ const suspects = [
     alibi:
       "Claims he was in the wine cellar during the theft.",
     guilty: true,
+    interrogation:
+      "I was checking the wine cellar inventory when the blackout happened. I heard hurried footsteps upstairs just before the alarms went off.",
     avatar: "🕴️"
   },
 
@@ -23,7 +25,9 @@ const suspects = [
       "Aman frequently argued with the estate owner over land disputes and inheritance rumors.",
     alibi:
       "Says he was outside taking a phone call near the garden.",
-    guilty: false,
+    guilty: false, interrogation:
+      "I stepped outside to answer a private phone call. When I returned, the entire mansion was already in chaos.",
+
     avatar: "🎩"
   },
 
@@ -36,13 +40,15 @@ const suspects = [
       "Riya lived inside the estate and knew the security system better than anyone else.",
     alibi:
       "Claims she was preparing drinks for guests during the blackout.",
+    interrogation:
+      "I was serving drinks in the ballroom. The lights flickered twice before everything suddenly went dark for a few seconds.",
     guilty: false,
     avatar: "🧤"
   }
 ];
-const suspectContainer=document.getElementById("suspects-container");
+const suspectContainer = document.getElementById("suspects-container");
 suspects.forEach((suspect) => {
-    suspectContainer.innerHTML += `
+  suspectContainer.innerHTML += `
    <div class="suspect-card">
         <div class="suspect-card__avatar">
             ${suspect.avatar}
@@ -62,7 +68,7 @@ suspects.forEach((suspect) => {
         <p class="suspect-card__motive">
             ${suspect.motive}
         </p>
-        <button class="suspect-card__btn">INVESTIGATE</button>
+        <button data-id="${suspect.id}" class="suspect-card__btn">INVESTIGATE</button>
    </div>
 `;
 });
@@ -102,9 +108,9 @@ const clues = [
     tag: "CRIME SCENE"
   }
 ];
-const cluesContainer=document.getElementById("clues-container");
+const cluesContainer = document.getElementById("clues-container");
 clues.forEach((clue) => {
-    cluesContainer.innerHTML += `
+  cluesContainer.innerHTML += `
    <div class="clue-card">
         <p class="clue-card__number">
             ${clue.number}
@@ -120,4 +126,89 @@ clues.forEach((clue) => {
         </p>
    </div>
 `;
+});
+
+//---------------investigation-----------------------------
+const buttons = document.querySelectorAll(".suspect-card__btn");
+const interrogationContainer = document.getElementById("interrogation-container");
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const clickedId = button.dataset.id;
+    switch (clickedId) {
+
+      case "1":
+        interrogationContainer.innerHTML = `
+         <div class="dialogue-bubble dialogue-bubble--detective">
+            <div class="dialogue-speaker">
+               Detective
+            </div>
+
+            <div class="dialogue-text">
+               Where were you at 9 PM, Mr. Rahul?
+            </div>
+         </div>
+
+         <div class="dialogue-bubble dialogue-bubble--suspect">
+            <div class="dialogue-speaker">
+               Rahul Mehta
+            </div>
+
+            <div class="dialogue-text">
+               ${suspects[0].interrogation}
+            </div>
+         </div>
+      `;
+        break;
+
+
+      case "2":
+        interrogationContainer.innerHTML = `
+         <div class="dialogue-bubble dialogue-bubble--detective">
+            <div class="dialogue-speaker">
+               Detective
+            </div>
+
+            <div class="dialogue-text">
+               Your story seems suspicious, Aman. Explain yourself.
+            </div>
+         </div>
+
+         <div class="dialogue-bubble dialogue-bubble--suspect">
+            <div class="dialogue-speaker">
+               Aman Verma
+            </div>
+
+            <div class="dialogue-text">
+               ${suspects[1].interrogation}
+            </div>
+         </div>
+      `;
+        break;
+
+
+      case "3":
+        interrogationContainer.innerHTML = `
+         <div class="dialogue-bubble dialogue-bubble--detective">
+            <div class="dialogue-speaker">
+               Detective
+            </div>
+
+            <div class="dialogue-text">
+               Riya, multiple witnesses saw you near the ballroom.
+            </div>
+         </div>
+
+         <div class="dialogue-bubble dialogue-bubble--suspect">
+            <div class="dialogue-speaker">
+               Riya Kapoor
+            </div>
+
+            <div class="dialogue-text">
+               ${suspects[2].interrogation}
+            </div>
+         </div>
+      `;
+        break;
+    }
+  });
 });
