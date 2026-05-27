@@ -133,7 +133,9 @@ const buttons = document.querySelectorAll(".suspect-card__btn");
 const interrogationContainer = document.getElementById("interrogation-container");
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
+    console.log("clicked");
     const clickedId = button.dataset.id;
+    console.log(clickedId);
     switch (clickedId) {
 
       case "1":
@@ -211,4 +213,181 @@ buttons.forEach((button) => {
         break;
     }
   });
+});
+
+//-------------accusation-------------------
+
+const accusationContainer = document.getElementById("accusation-container");
+
+accusationContainer.innerHTML = `
+   <div class="accusation-grid"></div>
+`;
+
+const accusationGrid = document.querySelector(".accusation-grid");
+
+
+//---------render accusation buttons---------
+
+suspects.forEach((suspect) => {
+
+   accusationGrid.innerHTML += `
+
+      <button class="accuse-btn" data-id="${suspect.id}">
+
+         <div class="accuse-label">
+            FINAL ACCUSATION
+         </div>
+
+         <div>
+            ${suspect.name}
+         </div>
+
+      </button>
+
+   `;
+});
+
+
+//--------------result logic----------------
+
+const accusebuttons = document.querySelectorAll(".accuse-btn");
+
+const resultContainer = document.getElementById("result-container");
+
+accusebuttons.forEach((accusebutton) => {
+
+   accusebutton.addEventListener("click", () => {
+
+      const Id = accusebutton.dataset.id;
+
+      switch (Id) {
+
+         case "1":
+
+            if (suspects[0].guilty) {
+
+               resultContainer.innerHTML = `
+
+                  <div class="result-solved">
+
+                     <div class="result-solved__badge">
+                        CASE SOLVED
+                     </div>
+
+                     <p class="result-sub">
+                        Rahul Mehta was exposed as the mastermind behind the Blackwood Diamond robbery.
+                     </p>
+
+                  </div>
+
+               `;
+
+            } else {
+
+               resultContainer.innerHTML = `
+
+                  <div class="result-escaped">
+
+                     <div class="result-escaped__badge">
+                        CRIMINAL ESCAPED
+                     </div>
+
+                     <p class="result-sub">
+                        The wrong suspect was accused. During the confusion, the real criminal escaped unnoticed.
+                     </p>
+
+                  </div>
+
+               `;
+            }
+
+            break;
+
+
+
+         case "2":
+
+            if (suspects[1].guilty) {
+
+               resultContainer.innerHTML = `
+
+                  <div class="result-solved">
+
+                     <div class="result-solved__badge">
+                        CASE SOLVED
+                     </div>
+
+                     <p class="result-sub">
+                        Aman Verma was revealed to be the hidden mastermind behind the robbery.
+                     </p>
+
+                  </div>
+
+               `;
+
+            } else {
+
+               resultContainer.innerHTML = `
+
+                  <div class="result-escaped">
+
+                     <div class="result-escaped__badge">
+                        CRIMINAL ESCAPED
+                     </div>
+
+                     <p class="result-sub">
+                        Aman Verma was innocent. The real criminal used the chaos to disappear forever.
+                     </p>
+
+                  </div>
+
+               `;
+            }
+
+            break;
+
+
+
+         case "3":
+
+            if (suspects[2].guilty) {
+
+               resultContainer.innerHTML = `
+
+                  <div class="result-solved">
+
+                     <div class="result-solved__badge">
+                        CASE SOLVED
+                     </div>
+
+                     <p class="result-sub">
+                        Riya Kapoor was finally exposed as the true thief behind the mansion robbery.
+                     </p>
+
+                  </div>
+
+               `;
+
+            } else {
+
+               resultContainer.innerHTML = `
+
+                  <div class="result-escaped">
+
+                     <div class="result-escaped__badge">
+                        CRIMINAL ESCAPED
+                     </div>
+
+                     <p class="result-sub">
+                        Riya Kapoor was wrongly accused. Meanwhile, the true thief vanished without a trace.
+                     </p>
+
+                  </div>
+
+               `;
+            }
+
+            break;
+      }
+   });
 });
