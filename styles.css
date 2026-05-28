@@ -874,6 +874,51 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
 }
 
+.accusation-locked {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+
+  background: rgba(232, 0, 28, 0.06);
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(232, 0, 28, 0.25);
+  border-radius: var(--radius-md);
+
+  box-shadow:
+    0 0 20px rgba(232, 0, 28, 0.08),
+    inset 0 0 30px rgba(232, 0, 28, 0.03);
+
+  text-align: center;
+
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+
+  color: var(--clr-red-bright);
+
+  animation: locked-pulse 2s infinite ease-in-out;
+}
+
+@keyframes locked-pulse {
+
+  0% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+
+}
 /* ════════════════════════════════════════
    RESULT SECTION
    ════════════════════════════════════════ */
