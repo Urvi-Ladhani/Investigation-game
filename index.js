@@ -10,7 +10,7 @@ const suspects = [
          "Rahul handled financial operations for the Blackwood Estate. Recently discovered to be under massive financial pressure.",
       alibi:
          "Claims he was in the wine cellar during the theft.",
-      guilty: true,
+      guilty: false,
       interrogated: false,
       interrogation:
          "I was checking the wine cellar inventory when the blackout happened. I heard hurried footsteps upstairs just before the alarms went off.",
@@ -50,6 +50,12 @@ const suspects = [
       avatar: "🧤"
    }
 ];
+
+//----------randomly choosing guilty---------------------
+
+const randomIndex = Math.floor(Math.random() * suspects.length);
+suspects[randomIndex].guilty = true;
+
 const suspectContainer = document.getElementById("suspects-container");
 suspects.forEach((suspect) => {
    suspectContainer.innerHTML += `
@@ -443,5 +449,4 @@ function renderAccusationSection() {
    }
 
 }
-
 renderAccusationSection();
