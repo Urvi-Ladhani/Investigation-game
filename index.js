@@ -154,6 +154,36 @@ clues.forEach((clue) => {
 `;
 });
 
+//-----------type writer effect--------------------
+
+function typeWriterEffect(element, text, callback) {
+
+   element.textContent = "";
+
+   let index = 0;
+
+   const typing = setInterval(() => {
+
+      if (index < text.length) {
+
+         element.textContent += text[index];
+
+         index++;
+
+      } else {
+
+         clearInterval(typing);
+
+         if (callback) {
+            callback();
+         }
+
+      }
+
+   }, 30);
+
+}
+
 //---------------investigation-----------------------------
 const buttons = document.querySelectorAll(".suspect-card__btn");
 const interrogationContainer = document.getElementById("interrogation-container");
@@ -189,11 +219,19 @@ buttons.forEach((button) => {
                Rahul Mehta
             </div>
 
-            <div class="dialogue-text">
-               ${suspects[0].interrogation}
-            </div>
+            <div class="dialogue-text suspect-typing"></div>
 
          </div>
+         
+      `;
+            const typingElement1 = document.querySelector(".suspect-typing");
+
+            typeWriterEffect(
+               typingElement1,
+               suspects[0].interrogation,
+               () => {
+
+                  interrogationContainer.innerHTML += `
          <div class="evidence-card">
 
             <div class="evidence-title">
@@ -206,6 +244,9 @@ buttons.forEach((button) => {
 
          </div>
       `;
+
+               }
+            );
             interrogationContainer.scrollIntoView({
                behavior: "smooth"
             });
@@ -237,10 +278,18 @@ buttons.forEach((button) => {
                Aman Verma
             </div>
 
-            <div class="dialogue-text">
-               ${suspects[1].interrogation}
-            </div>
+            <div class="dialogue-text suspect-typing"></div>
          </div>
+         
+      `;
+            const typingElement2 = document.querySelector(".suspect-typing");
+
+            typeWriterEffect(
+               typingElement2,
+               suspects[1].interrogation,
+               () => {
+
+                  interrogationContainer.innerHTML += `
          <div class="evidence-card">
 
    <div class="evidence-title">
@@ -253,7 +302,10 @@ buttons.forEach((button) => {
 
 </div>
       `;
-      
+
+               }
+            );
+
             interrogationContainer.scrollIntoView({
                behavior: "smooth"
             });
@@ -285,10 +337,20 @@ buttons.forEach((button) => {
                Riya Kapoor
             </div>
 
-            <div class="dialogue-text">
-               ${suspects[2].interrogation}
-            </div>
+            <div class="dialogue-text suspect-typing"></div>
          </div>
+         
+
+</div>
+      `;
+            const typingElement3 = document.querySelector(".suspect-typing");
+
+            typeWriterEffect(
+               typingElement3,
+               suspects[2].interrogation,
+               () => {
+
+                  interrogationContainer.innerHTML += `
          <div class="evidence-card">
 
    <div class="evidence-title">
@@ -298,9 +360,10 @@ buttons.forEach((button) => {
    <div class="evidence-text">
       ${evidence3}
    </div>
-
-</div>
       `;
+
+               }
+            );
             interrogationContainer.scrollIntoView({
                behavior: "smooth"
             });
