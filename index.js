@@ -14,7 +14,12 @@ const suspects = [
       interrogated: false,
       interrogation:
          "I was checking the wine cellar inventory when the blackout happened. I heard hurried footsteps upstairs just before the alarms went off.",
-      avatar: "🕴️"
+      avatar: "🕴️",
+      guiltyClue:
+         "Investigators recovered Rahul’s recent bank records and discovered several large gambling payments made only hours before the robbery. Further investigation revealed that Rahul had secretly borrowed huge amounts of money over the past few months and was desperately trying to clear his debts before creditors arrived at the estate.",
+
+      innocentClue:
+         "CCTV timestamps and security logs confirmed Rahul remained inside the wine cellar throughout the mansion blackout. Guards later verified that no movement was recorded from the cellar corridor toward the vault area during the exact time of the robbery."
    },
 
    {
@@ -31,7 +36,12 @@ const suspects = [
       interrogation:
          "I stepped outside to answer a private phone call. When I returned, the entire mansion was already in chaos.",
 
-      avatar: "🎩"
+      avatar: "🎩",
+      guiltyClue:
+         "Muddy shoe prints discovered near the mansion’s rear entrance matched the exact sole pattern of Aman’s leather boots. During a later search, investigators also found traces of wet soil and torn fabric inside Aman’s car, suggesting he may have entered the estate grounds secretly during the chaos.",
+
+      innocentClue:
+         "Phone tower records confirmed Aman was standing outside the mansion gates during the robbery while attending a private phone call. Several witnesses near the garden also confirmed seeing Aman away from the main hall at the exact moment the blackout happened."
    },
 
    {
@@ -47,7 +57,12 @@ const suspects = [
          "I was serving drinks in the ballroom. The lights flickered twice before everything suddenly went dark for a few seconds.",
       guilty: false,
       interrogated: false,
-      avatar: "🧤"
+      avatar: "🧤",
+      guiltyClue:
+         "Moments before the mansion cameras suddenly shut down, someone used Riya’s personal security access code to enter the surveillance system. Investigators later discovered partially deleted security logs connected to her account, raising suspicion that someone inside the estate attempted to hide digital evidence.",
+
+      innocentClue:
+         "Multiple guests and staff members confirmed Riya was continuously serving drinks inside the ballroom throughout the blackout. Several witnesses stated she never left the crowded hall during the few critical minutes when the diamond disappeared from the vault."
    }
 ];
 
@@ -55,6 +70,7 @@ const suspects = [
 
 const randomIndex = Math.floor(Math.random() * suspects.length);
 suspects[randomIndex].guilty = true;
+console.log(randomIndex);
 
 const suspectContainer = document.getElementById("suspects-container");
 suspects.forEach((suspect) => {
@@ -150,6 +166,12 @@ buttons.forEach((button) => {
 
          case "1":
             suspects[0].interrogated = true;
+            let evidence1;
+            if (suspects[0].guilty) {
+               evidence1 = suspects[0].guiltyClue;
+            } else {
+               evidence1 = suspects[0].innocentClue;
+            }
             renderAccusationSection();
             interrogationContainer.innerHTML = `
          <div class="dialogue-bubble dialogue-bubble--detective">
@@ -170,6 +192,18 @@ buttons.forEach((button) => {
             <div class="dialogue-text">
                ${suspects[0].interrogation}
             </div>
+
+         </div>
+         <div class="evidence-card">
+
+            <div class="evidence-title">
+               EVIDENCE UNLOCKED
+            </div>
+
+            <div class="evidence-text">
+               ${evidence1}
+            </div>
+
          </div>
       `;
             interrogationContainer.scrollIntoView({
@@ -180,6 +214,12 @@ buttons.forEach((button) => {
 
          case "2":
             suspects[1].interrogated = true;
+            let evidence2;
+            if (suspects[1].guilty) {
+               evidence2 = suspects[1].guiltyClue;
+            } else {
+               evidence2 = suspects[1].innocentClue;
+            }
             renderAccusationSection();
             interrogationContainer.innerHTML = `
          <div class="dialogue-bubble dialogue-bubble--detective">
@@ -201,7 +241,19 @@ buttons.forEach((button) => {
                ${suspects[1].interrogation}
             </div>
          </div>
+         <div class="evidence-card">
+
+   <div class="evidence-title">
+      EVIDENCE UNLOCKED
+   </div>
+
+   <div class="evidence-text">
+      ${evidence2}
+   </div>
+
+</div>
       `;
+      
             interrogationContainer.scrollIntoView({
                behavior: "smooth"
             });
@@ -210,6 +262,12 @@ buttons.forEach((button) => {
 
          case "3":
             suspects[2].interrogated = true;
+            let evidence3;
+            if (suspects[2].guilty) {
+               evidence3 = suspects[2].guiltyClue;
+            } else {
+               evidence3 = suspects[2].innocentClue;
+            }
             renderAccusationSection();
             interrogationContainer.innerHTML = `
          <div class="dialogue-bubble dialogue-bubble--detective">
@@ -231,6 +289,17 @@ buttons.forEach((button) => {
                ${suspects[2].interrogation}
             </div>
          </div>
+         <div class="evidence-card">
+
+   <div class="evidence-title">
+      EVIDENCE UNLOCKED
+   </div>
+
+   <div class="evidence-text">
+      ${evidence3}
+   </div>
+
+</div>
       `;
             interrogationContainer.scrollIntoView({
                behavior: "smooth"

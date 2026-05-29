@@ -776,6 +776,58 @@ img { display: block; max-width: 100%; }
   line-height: 1.6;
 }
 
+.evidence-card {
+  margin-top: 1.8rem;
+  padding: 1.5rem;
+
+  background: rgba(255, 180, 60, 0.05);
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255, 180, 60, 0.18);
+  border-left: 4px solid var(--clr-gold);
+
+  border-radius: var(--radius-md);
+
+  box-shadow:
+    0 0 25px rgba(255, 180, 60, 0.08),
+    inset 0 0 20px rgba(255, 180, 60, 0.03);
+
+  animation: evidenceReveal 0.45s ease;
+}
+
+.evidence-title {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+
+  color: var(--clr-gold);
+
+  margin-bottom: 0.9rem;
+}
+
+.evidence-text {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+
+  color: var(--clr-text);
+}
+
+@keyframes evidenceReveal {
+
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
 /* ════════════════════════════════════════
    FINAL ACCUSATION SECTION
    ════════════════════════════════════════ */
