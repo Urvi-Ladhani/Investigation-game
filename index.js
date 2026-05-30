@@ -183,6 +183,26 @@ function typeWriterEffect(element, text, callback) {
    }, 30);
 
 }
+//----------------sound effect-----------------------------
+
+const clickSound = new Audio("sounds_game/click.mp3");
+const whooshSound = new Audio("sounds_game/whoosh.mp3");
+const successSound = new Audio("sounds_game/success.mp3");
+const errorSound = new Audio("sounds_game/error.mp3");
+const evidenceSound = new Audio("sounds_game/evidence.mp3");
+
+
+const startBtn = document.getElementById("start-btn");
+startBtn.addEventListener("click", () => {
+
+   clickSound.currentTime = 0;
+
+   clickSound.play();
+
+});
+
+
+
 
 //---------------investigation-----------------------------
 const buttons = document.querySelectorAll(".suspect-card__btn");
@@ -191,7 +211,10 @@ buttons.forEach((button) => {
    button.addEventListener("click", () => {
       console.log("clicked");
       const clickedId = button.dataset.id;
-      console.log(clickedId);
+      clickSound.currentTime = 0;
+      clickSound.play();
+      whooshSound.currentTime = 0;
+      whooshSound.play();
       switch (clickedId) {
 
          case "1":
@@ -230,7 +253,8 @@ buttons.forEach((button) => {
                typingElement1,
                suspects[0].interrogation,
                () => {
-
+                  evidenceSound.currentTime = 0;
+                  evidenceSound.play();
                   interrogationContainer.innerHTML += `
          <div class="evidence-card">
 
@@ -288,7 +312,8 @@ buttons.forEach((button) => {
                typingElement2,
                suspects[1].interrogation,
                () => {
-
+                  evidenceSound.currentTime = 0;
+                  evidenceSound.play();
                   interrogationContainer.innerHTML += `
          <div class="evidence-card">
 
@@ -321,6 +346,7 @@ buttons.forEach((button) => {
                evidence3 = suspects[2].innocentClue;
             }
             renderAccusationSection();
+
             interrogationContainer.innerHTML = `
          <div class="dialogue-bubble dialogue-bubble--detective">
             <div class="dialogue-speaker">
@@ -349,7 +375,8 @@ buttons.forEach((button) => {
                typingElement3,
                suspects[2].interrogation,
                () => {
-
+                  evidenceSound.currentTime = 0;
+                  evidenceSound.play();
                   interrogationContainer.innerHTML += `
          <div class="evidence-card">
 
@@ -435,7 +462,8 @@ function renderAccusationSection() {
       const resultContainer = document.getElementById("result-container");
       accusebuttons.forEach((accusebutton) => {
          accusebutton.addEventListener("click", () => {
-
+            clickSound.currentTime = 0;
+            clickSound.play();
             const Id = accusebutton.dataset.id;
 
             switch (Id) {
@@ -443,6 +471,8 @@ function renderAccusationSection() {
                case "1":
 
                   if (suspects[0].guilty) {
+                     successSound.currentTime = 0;
+                     successSound.play();
 
                      resultContainer.innerHTML = `
 
@@ -461,7 +491,8 @@ function renderAccusationSection() {
                      `;
 
                   } else {
-
+                     errorSound.currentTime = 0;
+                     errorSound.play();
                      resultContainer.innerHTML = `
 
                         <div class="result-escaped">
@@ -486,7 +517,8 @@ function renderAccusationSection() {
                case "2":
 
                   if (suspects[1].guilty) {
-
+                     successSound.currentTime = 0;
+                     successSound.play();
                      resultContainer.innerHTML = `
 
                         <div class="result-solved">
@@ -504,7 +536,8 @@ function renderAccusationSection() {
                      `;
 
                   } else {
-
+                     errorSound.currentTime = 0;
+                     errorSound.play();
                      resultContainer.innerHTML = `
 
                         <div class="result-escaped">
@@ -529,7 +562,8 @@ function renderAccusationSection() {
                case "3":
 
                   if (suspects[2].guilty) {
-
+                     successSound.currentTime = 0;
+                     successSound.play();
                      resultContainer.innerHTML = `
 
                         <div class="result-solved">
@@ -547,6 +581,8 @@ function renderAccusationSection() {
                      `;
 
                   } else {
+                     errorSound.currentTime = 0;
+                     errorSound.play();
 
                      resultContainer.innerHTML = `
 
