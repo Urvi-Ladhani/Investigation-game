@@ -70,7 +70,7 @@ const suspects = [
 
 const randomIndex = Math.floor(Math.random() * suspects.length);
 suspects[randomIndex].guilty = true;
-console.log(randomIndex);
+console.log("Guilty Suspect Index:", randomIndex);
 
 const suspectContainer = document.getElementById("suspects-container");
 suspects.forEach((suspect) => {
@@ -99,7 +99,7 @@ suspects.forEach((suspect) => {
 `;
 });
 
-//-------------------cluess-------------------------
+//-------------------clues-------------------------
 
 const clues = [
    {
@@ -157,32 +157,22 @@ clues.forEach((clue) => {
 //-----------type writer effect--------------------
 
 function typeWriterEffect(element, text, callback) {
-
    element.textContent = "";
-
    let index = 0;
 
    const typing = setInterval(() => {
-
       if (index < text.length) {
-
          element.textContent += text[index];
-
          index++;
-
       } else {
-
          clearInterval(typing);
-
          if (callback) {
             callback();
          }
-
       }
-
    }, 30);
-
 }
+
 //----------------sound effect-----------------------------
 
 const clickSound = new Audio("sounds_game/click.mp3");
@@ -191,61 +181,39 @@ const successSound = new Audio("sounds_game/success.mp3");
 const errorSound = new Audio("sounds_game/error.mp3");
 const evidenceSound = new Audio("sounds_game/evidence.mp3");
 
-
 const startBtn = document.getElementById("start-btn");
 startBtn.addEventListener("click", () => {
-
    clickSound.currentTime = 0;
-
    clickSound.play();
-
 });
-
-
-
 
 //---------------investigation-----------------------------
 const buttons = document.querySelectorAll(".suspect-card__btn");
 const interrogationContainer = document.getElementById("interrogation-container");
+
 buttons.forEach((button) => {
    button.addEventListener("click", () => {
-      console.log("clicked");
       const clickedId = button.dataset.id;
       clickSound.currentTime = 0;
       clickSound.play();
       whooshSound.currentTime = 0;
       whooshSound.play();
-      switch (clickedId) {
 
+      switch (clickedId) {
          case "1":
             suspects[0].interrogated = true;
-            let evidence1;
-            if (suspects[0].guilty) {
-               evidence1 = suspects[0].guiltyClue;
-            } else {
-               evidence1 = suspects[0].innocentClue;
-            }
+            let evidence1 = suspects[0].guilty ? suspects[0].guiltyClue : suspects[0].innocentClue;
+            
             renderAccusationSection();
             interrogationContainer.innerHTML = `
          <div class="dialogue-bubble dialogue-bubble--detective">
-            <div class="dialogue-speaker">
-               Detective
-            </div>
-
-            <div class="dialogue-text">
-               Where were you at 9 PM, Mr. Rahul?
-            </div>
+            <div class="dialogue-speaker">Detective</div>
+            <div class="dialogue-text">Where were you at 9 PM, Mr. Rahul?</div>
          </div>
-
          <div class="dialogue-bubble dialogue-bubble--suspect">
-            <div class="dialogue-speaker">
-               Rahul Mehta
-            </div>
-
+            <div class="dialogue-speaker">Rahul Mehta</div>
             <div class="dialogue-text suspect-typing"></div>
-
          </div>
-         
       `;
             const typingElement1 = document.querySelector(".suspect-typing");
 
@@ -257,82 +225,51 @@ buttons.forEach((button) => {
                   evidenceSound.play();
                   interrogationContainer.innerHTML += `
          <div class="evidence-card">
-
-            <div class="evidence-title">
-               EVIDENCE UNLOCKED
-            </div>
-
-            <div class="evidence-text">
-               ${evidence1}
-            </div>
-
-            <button class="pin-btn">
-               📌 PIN TO CASE BOARD
-            </button>
-
+            <div class="evidence-title">EVIDENCE UNLOCKED</div>
+            <div class="evidence-text">${evidence1}</div>
+            <button class="pin-btn">📌 PIN TO CASE BOARD</button>
          </div>
-      `;const pinBtn = document.querySelector(".pin-btn");
+      `;
+                  const pinBtn = document.querySelector(".pin-btn");
 
-pinBtn.addEventListener("click", () => {
+                  pinBtn.addEventListener("click", () => {
+                     // Prevent duplicate pins
+                     if (pinBtn.disabled) return; 
+                     pinBtn.disabled = true;
+                     pinBtn.innerText = "📌 PINNED";
 
-   pinnedEvidence.push({
+                     pinnedEvidence.push({
+                        suspect: suspects[0].name,
+                        text: evidence1,
+                        level: suspects[0].guilty ? "HIGH RISK" : "ALIBI VERIFIED",
+                        levelClass: suspects[0].guilty ? "priority-danger" : "priority-safe"
+                     });
 
-      suspect: suspects[0].name,
+                     renderCaseBoard();
 
-      text: evidence1,
-
-      level: suspects[0].guilty
-         ? "HIGH RISK"
-         : "ALIBI VERIFIED",
-
-      levelClass: suspects[0].guilty
-         ? "priority-danger"
-         : "priority-safe"
-
-   });
-
-   renderCaseBoard();
-
-   renderConnections();
-
-});
-
+                     setTimeout(() => {
+                        renderConnections();
+                     }, 50);
+                  });
                }
             );
-            interrogationContainer.scrollIntoView({
-               behavior: "smooth"
-            });
+            interrogationContainer.scrollIntoView({ behavior: "smooth" });
             break;
-
 
          case "2":
             suspects[1].interrogated = true;
-            let evidence2;
-            if (suspects[1].guilty) {
-               evidence2 = suspects[1].guiltyClue;
-            } else {
-               evidence2 = suspects[1].innocentClue;
-            }
+            let evidence2 = suspects[1].guilty ? suspects[1].guiltyClue : suspects[1].innocentClue;
+            
             renderAccusationSection();
             interrogationContainer.innerHTML = `
          <div class="dialogue-bubble dialogue-bubble--detective">
-            <div class="dialogue-speaker">
-               Detective
-            </div>
-
-            <div class="dialogue-text">
-               Your story seems suspicious, Aman. Explain yourself.
-            </div>
+            <div class="dialogue-speaker">Detective</div>
+            <div class="dialogue-text">Your story seems suspicious, Aman. Explain yourself.</div>
          </div>
-
          <div class="dialogue-bubble dialogue-bubble--suspect">
-            <div class="dialogue-speaker">
-               Aman Verma
-            </div>
-
+            <div class="dialogue-speaker">Aman Verma</div>
             <div class="dialogue-text suspect-typing"></div>
          </div>
-         
       `;
             const typingElement2 = document.querySelector(".suspect-typing");
 
@@ -344,89 +281,52 @@ pinBtn.addEventListener("click", () => {
                   evidenceSound.play();
                   interrogationContainer.innerHTML += `
          <div class="evidence-card">
-
-   <div class="evidence-title">
-      EVIDENCE UNLOCKED
-   </div>
-
-   <div class="evidence-text">
-      ${evidence2}
-   </div>
-
-</div>
-
-<button class="pin-btn">
-         📌 PIN TO CASE BOARD
-      </button>
-
+            <div class="evidence-title">EVIDENCE UNLOCKED</div>
+            <div class="evidence-text">${evidence2}</div>
+            <button class="pin-btn">📌 PIN TO CASE BOARD</button>
+         </div>
       `;
 
-      const pinBtn = document.querySelector(".pin-btn");
+                  const pinBtn = document.querySelector(".pin-btn");
 
-pinBtn.addEventListener("click", () => {
+                  pinBtn.addEventListener("click", () => {
+                     if (pinBtn.disabled) return; 
+                     pinBtn.disabled = true;
+                     pinBtn.innerText = "📌 PINNED";
 
-   pinnedEvidence.push({
+                     pinnedEvidence.push({
+                        suspect: suspects[1].name,
+                        text: evidence2,
+                        level: suspects[1].guilty ? "HIGH RISK" : "ALIBI VERIFIED",
+                        levelClass: suspects[1].guilty ? "priority-danger" : "priority-safe"
+                     });
 
-      suspect: suspects[1].name,
+                     renderCaseBoard();
 
-      text: evidence2,
-
-      level: suspects[1].guilty
-         ? "HIGH RISK"
-         : "ALIBI VERIFIED",
-
-      levelClass: suspects[1].guilty
-         ? "priority-danger"
-         : "priority-safe"
-
-   });
-
-   renderCaseBoard();
-
-   renderConnections();
-
-});
-
+                     setTimeout(() => {
+                        renderConnections();
+                     }, 50);
+                  });
                }
             );
 
-            interrogationContainer.scrollIntoView({
-               behavior: "smooth"
-            });
+            interrogationContainer.scrollIntoView({ behavior: "smooth" });
             break;
-
 
          case "3":
             suspects[2].interrogated = true;
-            let evidence3;
-            if (suspects[2].guilty) {
-               evidence3 = suspects[2].guiltyClue;
-            } else {
-               evidence3 = suspects[2].innocentClue;
-            }
+            let evidence3 = suspects[2].guilty ? suspects[2].guiltyClue : suspects[2].innocentClue;
+            
             renderAccusationSection();
-
             interrogationContainer.innerHTML = `
          <div class="dialogue-bubble dialogue-bubble--detective">
-            <div class="dialogue-speaker">
-               Detective
-            </div>
-
-            <div class="dialogue-text">
-               Riya, multiple witnesses saw you near the ballroom.
-            </div>
+            <div class="dialogue-speaker">Detective</div>
+            <div class="dialogue-text">Riya, multiple witnesses saw you near the ballroom.</div>
          </div>
-
          <div class="dialogue-bubble dialogue-bubble--suspect">
-            <div class="dialogue-speaker">
-               Riya Kapoor
-            </div>
-
+            <div class="dialogue-speaker">Riya Kapoor</div>
             <div class="dialogue-text suspect-typing"></div>
          </div>
-         
-
-</div>
       `;
             const typingElement3 = document.querySelector(".suspect-typing");
 
@@ -438,51 +338,35 @@ pinBtn.addEventListener("click", () => {
                   evidenceSound.play();
                   interrogationContainer.innerHTML += `
          <div class="evidence-card">
-
-   <div class="evidence-title">
-      EVIDENCE UNLOCKED
-   </div>
-
-   <div class="evidence-text">
-      ${evidence3}
-   </div>
-
-   <button class="pin-btn">
-         📌 PIN TO CASE BOARD
-      </button>
+            <div class="evidence-title">EVIDENCE UNLOCKED</div>
+            <div class="evidence-text">${evidence3}</div>
+            <button class="pin-btn">📌 PIN TO CASE BOARD</button>
+         </div>
       `;
 
-      const pinBtn = document.querySelector(".pin-btn");
+                  const pinBtn = document.querySelector(".pin-btn");
 
-pinBtn.addEventListener("click", () => {
+                  pinBtn.addEventListener("click", () => {
+                     if (pinBtn.disabled) return; 
+                     pinBtn.disabled = true;
+                     pinBtn.innerText = "📌 PINNED";
 
-   pinnedEvidence.push({
+                     pinnedEvidence.push({
+                        suspect: suspects[2].name,
+                        text: evidence3,
+                        level: suspects[2].guilty ? "HIGH RISK" : "ALIBI VERIFIED",
+                        levelClass: suspects[2].guilty ? "priority-danger" : "priority-safe"
+                     });
 
-      suspect: suspects[2].name,
+                     renderCaseBoard();
 
-      text: evidence3,
-
-      level: suspects[2].guilty
-         ? "HIGH RISK"
-         : "ALIBI VERIFIED",
-
-      levelClass: suspects[2].guilty
-         ? "priority-danger"
-         : "priority-safe"
-
-   });
-
-   renderCaseBoard();
-
-   renderConnections();
-
-});
-
+                     setTimeout(() => {
+                        renderConnections();
+                     }, 50);
+                  });
                }
             );
-            interrogationContainer.scrollIntoView({
-               behavior: "smooth"
-            });
+            interrogationContainer.scrollIntoView({ behavior: "smooth" });
             break;
       }
    });
@@ -490,132 +374,117 @@ pinBtn.addEventListener("click", () => {
 
 //----------clues evidence board-------------------------------
 const pinnedEvidence = [];
+
 function renderCaseBoard() {
-
    const caseBoard = document.getElementById("case-board");
-
    caseBoard.innerHTML = "";
 
    if (pinnedEvidence.length === 0) {
-
       caseBoard.innerHTML = `
-
-         <div class="board-empty">
-            NO EVIDENCE PINNED YET
-         </div>
-
+         <div class="board-empty">NO EVIDENCE PINNED YET</div>
       `;
-
    } else {
-
       pinnedEvidence.forEach((evidence) => {
-
          caseBoard.innerHTML += `
-
             <div class="board-card">
-
                <div class="board-card__top">
-
-                  <div class="board-tag">
-                     ${evidence.suspect}
-                  </div>
-
-                  <div class="board-priority ${evidence.levelClass}">
-                     ${evidence.level}
-                  </div>
-
+                  <div class="board-tag">${evidence.suspect}</div>
+                  <div class="board-priority ${evidence.levelClass}">${evidence.level}</div>
                </div>
-
-               <div class="board-text">
-                  ${evidence.text}
-               </div>
-
+               <div class="board-text">${evidence.text}</div>
             </div>
-
          `;
-
       });
+   }
+}
 
+//-------------connection strings system-------------------
+
+function renderConnections() {
+   const wrapper = document.querySelector(".case-board-wrapper");
+   const svgContainer = document.getElementById("board-connections");
+   const cards = document.querySelectorAll(".board-card");
+   
+   if (!svgContainer || !wrapper) return;
+
+   // 1. FIX THE SVG SCALING BUG:
+   // Explicitly force the internal SVG coordinates to map exactly 
+   // to the pixel width and height of the wrapper container.
+   const wrapperRect = wrapper.getBoundingClientRect();
+   svgContainer.setAttribute("width", wrapperRect.width);
+   svgContainer.setAttribute("height", wrapperRect.height);
+
+   let svgHTML = "";
+
+   if (cards.length < 2) {
+      svgContainer.innerHTML = "";
+      return;
    }
 
-}
-function renderConnections() {
+   // 2. BULLETPROOF CALCULATION:
+   // Using getBoundingClientRect() guarantees we find the exact pixel 
+   // on the screen regardless of paddings, margins, or CSS quirks.
+   for (let i = 0; i < cards.length - 1; i++) {
+      const currentCard = cards[i].getBoundingClientRect();
+      const nextCard = cards[i + 1].getBoundingClientRect();
 
-   const caseBoard = document.getElementById("case-board");
+      // Start line at the top-center of the first card (where the pin is)
+      const startX = (currentCard.left - wrapperRect.left) + (currentCard.width / 2);
+      const startY = (currentCard.top - wrapperRect.top) + 5; // +5 to hit the red pin dead center
 
-   if (pinnedEvidence.length >= 2) {
+      // End line at the top-center of the second card
+      const endX = (nextCard.left - wrapperRect.left) + (nextCard.width / 2);
+      const endY = (nextCard.top - wrapperRect.top) + 5;
 
-      caseBoard.innerHTML += `
-
-         <div class="connection-line">
-            ⛓ EVIDENCE CONNECTION DETECTED
-         </div>
-
+      svgHTML += `
+         <line 
+            x1="${startX}" y1="${startY}" 
+            x2="${endX}" y2="${endY}" 
+            class="string-line">
+         </line>
       `;
    }
 
+   svgContainer.innerHTML = svgHTML;
 }
+
+// Redraw strings smoothly if the user resizes their browser window
+window.addEventListener("resize", () => {
+   if (pinnedEvidence.length >= 2) {
+      renderConnections();
+   }
+});
 
 //-------------accusation-------------------
 
 function renderAccusationSection() {
-
    const accusationContainer = document.getElementById("accusation-container");
-
-   accusationContainer.innerHTML = `
-      <div class="accusation-grid"></div>
-   `;
-
+   accusationContainer.innerHTML = `<div class="accusation-grid"></div>`;
    const accusationGrid = document.querySelector(".accusation-grid");
 
-
-
    // ---------- check interrogations ----------
-
    let checkInterrogated = true;
-
    suspects.forEach((suspect) => {
-
       if (suspect.interrogated === false) {
          checkInterrogated = false;
       }
-
    });
 
-
-
    // ---------- render accusation buttons ----------
-
    if (checkInterrogated === true) {
-
       suspects.forEach((suspect) => {
-
          accusationGrid.innerHTML += `
-
             <button class="accuse-btn" data-id="${suspect.id}">
-
-               <div class="accuse-label">
-                  FINAL ACCUSATION
-               </div>
-
-               <div>
-                  ${suspect.name}
-               </div>
-
+               <div class="accuse-label">FINAL ACCUSATION</div>
+               <div>${suspect.name}</div>
             </button>
-
          `;
-
       });
 
-
-
-
-      // buttons created dynamically
-      // so listeners added AFTER creation
-
+      // buttons created dynamically so listeners added AFTER creation
       const accusebuttons = document.querySelectorAll(".accuse-btn");
       const resultContainer = document.getElementById("result-container");
+      
       accusebuttons.forEach((accusebutton) => {
          accusebutton.addEventListener("click", () => {
             clickSound.currentTime = 0;
@@ -623,147 +492,76 @@ function renderAccusationSection() {
             const Id = accusebutton.dataset.id;
 
             switch (Id) {
-
                case "1":
-
                   if (suspects[0].guilty) {
                      successSound.currentTime = 0;
                      successSound.play();
-
                      resultContainer.innerHTML = `
-
                         <div class="result-solved">
-
-                           <div class="result-solved__badge">
-                              CASE SOLVED
-                           </div>
-
-                           <p class="result-sub">
-                              Rahul Mehta was exposed as the mastermind behind the Blackwood Diamond robbery.
-                           </p>
-
+                           <div class="result-solved__badge">CASE SOLVED</div>
+                           <p class="result-sub">Rahul Mehta was exposed as the mastermind behind the Blackwood Diamond robbery.</p>
                         </div>
-
                      `;
-
                   } else {
                      errorSound.currentTime = 0;
                      errorSound.play();
                      resultContainer.innerHTML = `
-
                         <div class="result-escaped">
-
-                           <div class="result-escaped__badge">
-                              CRIMINAL ESCAPED
-                           </div>
-
-                           <p class="result-sub">
-                              The wrong suspect was accused.
-                           </p>
-
+                           <div class="result-escaped__badge">CRIMINAL ESCAPED</div>
+                           <p class="result-sub">The wrong suspect was accused.</p>
                         </div>
-
                      `;
                   }
-
                   break;
 
-
-
                case "2":
-
                   if (suspects[1].guilty) {
                      successSound.currentTime = 0;
                      successSound.play();
                      resultContainer.innerHTML = `
-
                         <div class="result-solved">
-
-                           <div class="result-solved__badge">
-                              CASE SOLVED
-                           </div>
-
-                           <p class="result-sub">
-                              Aman Verma was revealed as the true criminal.
-                           </p>
-
+                           <div class="result-solved__badge">CASE SOLVED</div>
+                           <p class="result-sub">Aman Verma was revealed as the true criminal.</p>
                         </div>
-
                      `;
-
                   } else {
                      errorSound.currentTime = 0;
                      errorSound.play();
                      resultContainer.innerHTML = `
-
                         <div class="result-escaped">
-
-                           <div class="result-escaped__badge">
-                              CRIMINAL ESCAPED
-                           </div>
-
-                           <p class="result-sub">
-                              Aman Verma was innocent.
-                           </p>
-
+                           <div class="result-escaped__badge">CRIMINAL ESCAPED</div>
+                           <p class="result-sub">Aman Verma was innocent.</p>
                         </div>
-
                      `;
                   }
-
                   break;
 
-
-
                case "3":
-
                   if (suspects[2].guilty) {
                      successSound.currentTime = 0;
                      successSound.play();
                      resultContainer.innerHTML = `
-
                         <div class="result-solved">
-
-                           <div class="result-solved__badge">
-                              CASE SOLVED
-                           </div>
-
-                           <p class="result-sub">
-                              Riya Kapoor was exposed as the real thief.
-                           </p>
-
+                           <div class="result-solved__badge">CASE SOLVED</div>
+                           <p class="result-sub">Riya Kapoor was exposed as the real thief.</p>
                         </div>
-
                      `;
-
                   } else {
                      errorSound.currentTime = 0;
                      errorSound.play();
-
                      resultContainer.innerHTML = `
-
                         <div class="result-escaped">
-
-                           <div class="result-escaped__badge">
-                              CRIMINAL ESCAPED
-                           </div>
-
-                           <p class="result-sub">
-                              Riya Kapoor was wrongly accused.
-                           </p>
-
+                           <div class="result-escaped__badge">CRIMINAL ESCAPED</div>
+                           <p class="result-sub">Riya Kapoor was wrongly accused.</p>
                         </div>
-
                      `;
                   }
-
                   break;
             }
-
+            // Scroll to results
+            resultContainer.scrollIntoView({ behavior: "smooth" });
          });
-
       });
-
    } else {
       accusationGrid.innerHTML += `
          <p class="accusation-locked">
@@ -771,6 +569,7 @@ function renderAccusationSection() {
          </p>
       `;
    }
-
 }
+
+// Initial Call
 renderAccusationSection();

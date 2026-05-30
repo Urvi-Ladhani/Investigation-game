@@ -815,17 +815,14 @@ img { display: block; max-width: 100%; }
 }
 
 @keyframes evidenceReveal {
-
   from {
     opacity: 0;
     transform: translateY(10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
-
 }
 
 /* ════════════════════════════════════════
@@ -954,23 +951,20 @@ img { display: block; max-width: 100%; }
 }
 
 @keyframes locked-pulse {
-
   0% {
     opacity: 0.65;
     transform: scale(1);
   }
-
   50% {
     opacity: 1;
     transform: scale(1.02);
   }
-
   100% {
     opacity: 0.65;
     transform: scale(1);
   }
-
 }
+
 /* ════════════════════════════════════════
    RESULT SECTION
    ════════════════════════════════════════ */
@@ -1141,14 +1135,10 @@ img { display: block; max-width: 100%; }
   .meta-divider { display: none; }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .btn { justify-content: center; }
-
   .board-header { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
-
   .footer-inner { flex-direction: column; align-items: flex-start; }
   .footer-right { flex-wrap: wrap; }
-
   .evidence-board { padding: 1.5rem 1.25rem; }
-
   .title-line-2 { font-size: clamp(4.2rem, 20vw, 7rem); }
 }
 
@@ -1187,22 +1177,18 @@ img { display: block; max-width: 100%; }
 ::-webkit-scrollbar-thumb:hover { background: var(--clr-red-bright); }
 
 /* ════════════════════════════════════════
-   CASE BOARD SECTION
+   CASE BOARD SECTION & RED STRINGS
    ════════════════════════════════════════ */
 
-.case-board-section{
+.case-board-section {
    background: var(--clr-bg);
    padding: var(--section-pad) clamp(1.25rem, 5vw, 3rem);
 }
 
-.case-board-wrapper{
-
+.case-board-wrapper {
    max-width: var(--container-max);
-
    margin: 0 auto;
-
    border: 1px solid var(--clr-border);
-
    background:
       repeating-linear-gradient(
          -45deg,
@@ -1212,200 +1198,194 @@ img { display: block; max-width: 100%; }
          transparent 14px
       ),
       rgba(10,8,6,0.82);
-
    border-radius: var(--radius-lg);
-
    padding: 3rem;
-
-   position: relative;
-
+   position: relative; /* REQUIRED: Makes this the offset parent for the cards */
    overflow: hidden;
-
    box-shadow:
       var(--shadow-card),
       inset 0 0 40px rgba(232,0,28,0.03);
 }
 
-.case-board-wrapper::before{
-
+.case-board-wrapper::before {
    content:"";
-
    position:absolute;
-
    inset:0;
-
    background:
       linear-gradient(
          rgba(255,255,255,0.02) 1px,
          transparent 1px
       ),
-
       linear-gradient(
          90deg,
          rgba(255,255,255,0.02) 1px,
          transparent 1px
       );
-
    background-size:40px 40px;
-
    pointer-events:none;
 }
 
-#case-board{
-   position:relative;
-   z-index:2;
+/* The invisible canvas for our strings */
+#board-connections {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   pointer-events: none; 
+   z-index: 1; 
+   overflow: visible; /* ADD THIS: Prevents lines from clipping at the edges */
 }
 
-.board-empty{
+#case-board {
+   /* REMOVED position: relative so child offsets map directly to the wrapper! */
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+}
+
+.board-empty {
    text-align:center;
    color:#666;
    letter-spacing:4px;
    padding:80px 0;
 }
 
-.board-card{
-
-   border:1px solid rgba(255,255,255,0.08);
-
-   background:rgba(255,255,255,0.03);
-
-   padding:20px;
-
-   margin-bottom:20px;
-
-   border-radius:14px;
-
-   position:relative;
+/* Alternate card positioning for a messy, realistic board look */
+.board-card {
+   border: 1px solid rgba(255,255,255,0.08);
+   background: rgba(255,255,255,0.03);
+   padding: 20px;
+   margin-bottom: 20px;
+   border-radius: 14px;
+   position: relative;
+   z-index: 2; /* Keeps cards ABOVE the strings */
+   width: 85%;
+   transition: transform 0.3s ease;
 }
 
-.board-card__top{
+.board-card:nth-child(odd) {
+   align-self: flex-start;
+   transform: rotate(-1.5deg);
+}
 
+.board-card:nth-child(even) {
+   align-self: flex-end;
+   transform: rotate(1.5deg);
+}
+
+.board-card:hover {
+   transform: scale(1.02) rotate(0deg);
+   z-index: 10;
+}
+
+/* The red thumbtack on the cards */
+.board-card::before {
+   content: "";
+   position: absolute;
+   top: -8px;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 14px;
+   height: 14px;
+   background: radial-gradient(circle at 30% 30%, #ff6b6b, #d90000);
+   border-radius: 50%;
+   box-shadow: 0 4px 6px rgba(0,0,0,0.8), inset 0 -2px 4px rgba(0,0,0,0.4);
+   z-index: 5;
+}
+
+.board-card__top {
    display:flex;
-
    justify-content:space-between;
-
    margin-bottom:14px;
 }
 
-.board-tag{
-
+.board-tag {
    color:#ff3b3b;
-
    letter-spacing:3px;
-
    font-size:12px;
 }
 
-.board-priority{
-
+.board-priority {
    font-size:11px;
-
    letter-spacing:2px;
 }
 
-.priority-danger{
-   color:#ff4d4d;
-}
+.priority-danger { color:#ff4d4d; }
+.priority-safe   { color:#63ff9b; }
 
-.priority-safe{
-   color:#63ff9b;
-}
-
-.board-text{
-
+.board-text {
    color:#d7d7d7;
-
    line-height:1.8;
 }
 
-.pin-btn{
-
+.pin-btn {
    margin-top:20px;
-
    background:transparent;
-
    border:none;
-
    color:#c7a86d;
-
    font-family:inherit;
-
    font-size:0.82rem;
-
    letter-spacing:0.28em;
-
    text-transform:uppercase;
-
    cursor:pointer;
-
    display:inline-flex;
-
    align-items:center;
-
    gap:10px;
-
    padding:0;
-
    position:relative;
-
    transition:all 0.3s ease;
 }
 
-.pin-btn::after{
-
+.pin-btn::after {
    content:"";
-
    position:absolute;
-
    left:0;
-
    bottom:-6px;
-
    width:0%;
-
    height:1px;
-
    background:#c7a86d;
-
    transition:width 0.35s ease;
 }
 
-.pin-btn:hover{
-
+.pin-btn:hover {
    color:#ffe0a8;
-
    transform:translateX(4px);
 }
 
-.pin-btn:hover::after{
+.pin-btn:hover::after {
    width:100%;
 }
 
-.connection-line{
-
+.connection-line {
    margin-top:30px;
-
    text-align:center;
-
    color:#ff3b3b;
-
    letter-spacing:4px;
-
    animation:pulse 1.5s infinite;
 }
 
-@keyframes pulse{
+@keyframes pulse {
+   0%   { opacity:0.3; }
+   50%  { opacity:1; }
+   100% { opacity:0.3; }
+}
 
-   0%{
-      opacity:0.3;
+/* The animated glowing red string */
+.string-line {
+   stroke: var(--clr-red-bright);
+   stroke-width: 2.5px;
+   stroke-linecap: round;
+   filter: drop-shadow(0 0 6px rgba(232, 0, 28, 0.75));
+   
+   /* Simple trick to animate a drawing line */
+   stroke-dasharray: 2000; 
+   stroke-dashoffset: 2000;
+   animation: draw-string 1.5s ease-out forwards;
+}
+
+@keyframes draw-string {
+   to {
+      stroke-dashoffset: 0;
    }
-
-   50%{
-      opacity:1;
-   }
-
-   100%{
-      opacity:0.3;
-   }
-
 }
