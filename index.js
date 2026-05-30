@@ -266,8 +266,36 @@ buttons.forEach((button) => {
                ${evidence1}
             </div>
 
+            <button class="pin-btn">
+               📌 PIN TO CASE BOARD
+            </button>
+
          </div>
-      `;
+      `;const pinBtn = document.querySelector(".pin-btn");
+
+pinBtn.addEventListener("click", () => {
+
+   pinnedEvidence.push({
+
+      suspect: suspects[0].name,
+
+      text: evidence1,
+
+      level: suspects[0].guilty
+         ? "HIGH RISK"
+         : "ALIBI VERIFIED",
+
+      levelClass: suspects[0].guilty
+         ? "priority-danger"
+         : "priority-safe"
+
+   });
+
+   renderCaseBoard();
+
+   renderConnections();
+
+});
 
                }
             );
@@ -326,7 +354,38 @@ buttons.forEach((button) => {
    </div>
 
 </div>
+
+<button class="pin-btn">
+         📌 PIN TO CASE BOARD
+      </button>
+
       `;
+
+      const pinBtn = document.querySelector(".pin-btn");
+
+pinBtn.addEventListener("click", () => {
+
+   pinnedEvidence.push({
+
+      suspect: suspects[1].name,
+
+      text: evidence2,
+
+      level: suspects[1].guilty
+         ? "HIGH RISK"
+         : "ALIBI VERIFIED",
+
+      levelClass: suspects[1].guilty
+         ? "priority-danger"
+         : "priority-safe"
+
+   });
+
+   renderCaseBoard();
+
+   renderConnections();
+
+});
 
                }
             );
@@ -387,7 +446,37 @@ buttons.forEach((button) => {
    <div class="evidence-text">
       ${evidence3}
    </div>
+
+   <button class="pin-btn">
+         📌 PIN TO CASE BOARD
+      </button>
       `;
+
+      const pinBtn = document.querySelector(".pin-btn");
+
+pinBtn.addEventListener("click", () => {
+
+   pinnedEvidence.push({
+
+      suspect: suspects[2].name,
+
+      text: evidence3,
+
+      level: suspects[2].guilty
+         ? "HIGH RISK"
+         : "ALIBI VERIFIED",
+
+      levelClass: suspects[2].guilty
+         ? "priority-danger"
+         : "priority-safe"
+
+   });
+
+   renderCaseBoard();
+
+   renderConnections();
+
+});
 
                }
             );
@@ -399,6 +488,73 @@ buttons.forEach((button) => {
    });
 });
 
+//----------clues evidence board-------------------------------
+const pinnedEvidence = [];
+function renderCaseBoard() {
+
+   const caseBoard = document.getElementById("case-board");
+
+   caseBoard.innerHTML = "";
+
+   if (pinnedEvidence.length === 0) {
+
+      caseBoard.innerHTML = `
+
+         <div class="board-empty">
+            NO EVIDENCE PINNED YET
+         </div>
+
+      `;
+
+   } else {
+
+      pinnedEvidence.forEach((evidence) => {
+
+         caseBoard.innerHTML += `
+
+            <div class="board-card">
+
+               <div class="board-card__top">
+
+                  <div class="board-tag">
+                     ${evidence.suspect}
+                  </div>
+
+                  <div class="board-priority ${evidence.levelClass}">
+                     ${evidence.level}
+                  </div>
+
+               </div>
+
+               <div class="board-text">
+                  ${evidence.text}
+               </div>
+
+            </div>
+
+         `;
+
+      });
+
+   }
+
+}
+function renderConnections() {
+
+   const caseBoard = document.getElementById("case-board");
+
+   if (pinnedEvidence.length >= 2) {
+
+      caseBoard.innerHTML += `
+
+         <div class="connection-line">
+            ⛓ EVIDENCE CONNECTION DETECTED
+         </div>
+
+      `;
+   }
+
+}
 
 //-------------accusation-------------------
 
