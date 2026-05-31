@@ -123,13 +123,28 @@ img { display: block; max-width: 100%; }
   margin-bottom: 1rem;
   text-transform: uppercase;
 }
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.4rem, 6vw, 4.2rem);
-  letter-spacing: 0.06em;
-  color: var(--clr-text);
-  line-height: 1;
-  margin-bottom: 1rem;
+.section-title{
+
+   font-size:clamp(3rem,7vw,5.5rem);
+
+   font-weight:500;
+
+   letter-spacing:0.04em;
+
+   line-height:1.05;
+
+   color:#f3efe8;
+
+   text-align:center;
+
+   margin-bottom:24px;
+
+   font-family:
+   "Cormorant Garamond",
+   serif;
+
+   text-shadow:
+   0 0 25px rgba(255,255,255,0.05);
 }
 .section-subtitle {
   font-family: var(--font-body);
@@ -1388,4 +1403,474 @@ img { display: block; max-width: 100%; }
    to {
       stroke-dashoffset: 0;
    }
+}
+/* ══════════════════════════════════════════════════════════
+   CRIMINAL CASE FILES — styles.css
+   Exact match to reference design
+   ══════════════════════════════════════════════════════════ */
+
+:root {
+  --clr-bg:           #0a0a0a;
+  --clr-bg-card:      #111111;
+  --clr-bg-thumb:     #0d0d0d;
+
+  --clr-red:          #cc0000;
+  --clr-red-bright:   #e8001c;
+  --clr-red-glow:     rgba(232, 0, 28, 0.55);
+  --clr-red-border:   rgba(200, 0, 28, 0.55);
+  --clr-red-subtle:   rgba(232, 0, 28, 0.08);
+
+  --clr-text:         #e8e6df;
+  --clr-text-dim:     #8a8480;
+  --clr-text-faint:   #3a3835;
+  --clr-border:       rgba(255, 255, 255, 0.08);
+  --clr-border-card:  rgba(255, 255, 255, 0.1);
+
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-mono:    'Share Tech Mono', 'Courier New', monospace;
+  --font-body:    'Crimson Pro', Georgia, serif;
+
+  --glow-red:    0 0 25px rgba(232, 0, 28, 0.7), 0 0 60px rgba(232, 0, 28, 0.25);
+  --glow-red-sm: 0 0 10px rgba(232, 0, 28, 0.5);
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ─── FILM GRAIN OVERLAY ─── */
+.noise-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9000; opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+.scanlines {
+  position: fixed; inset: 0; pointer-events: none; z-index: 8999;
+  background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+}
+
+/* ─── CINEMATIC CORNER BRACKETS ─── */
+.corner {
+  position: fixed; width: 36px; height: 36px;
+  z-index: 8990; pointer-events: none; opacity: 0.6;
+}
+.corner--tl { top: 16px; left: 16px; border-top: 1.5px solid var(--clr-red-bright); border-left: 1.5px solid var(--clr-red-bright); }
+.corner--tr { top: 16px; right: 16px; border-top: 1.5px solid var(--clr-red-bright); border-right: 1.5px solid var(--clr-red-bright); }
+.corner--bl { bottom: 16px; left: 16px; border-bottom: 1.5px solid var(--clr-red-bright); border-left: 1.5px solid var(--clr-red-bright); }
+.corner--br { bottom: 16px; right: 16px; border-bottom: 1.5px solid var(--clr-red-bright); border-right: 1.5px solid var(--clr-red-bright); }
+
+/* ─── PULSE DOT ─── */
+.dot {
+  display: inline-block; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--clr-red-bright);
+  vertical-align: middle;
+}
+.pulse-dot { animation: pulse-red 2.2s ease-in-out infinite; }
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 var(--clr-red-glow); }
+  50%       { box-shadow: 0 0 0 5px rgba(232,0,28,0); }
+}
+
+/* ════════════════════════════════════════
+   HERO — full width cinematic header
+   ════════════════════════════════════════ */
+.archive-hero {
+  position: relative;
+  width: 100%;
+  padding: clamp(5rem, 10vw, 8rem) clamp(2rem, 6vw, 5rem) clamp(3rem, 6vw, 5rem);
+  text-align: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% 0%, rgba(180,0,20,0.1) 0%, transparent 65%),
+    var(--clr-bg);
+}
+
+/* Fine grid on hero bg */
+.hero-bg-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 90% 90% at center, black 15%, transparent 70%);
+}
+
+/* ─── TOP CLASSIFIED STRIP ─── */
+.classified-bar {
+  position: absolute;
+  top: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 1rem;
+  white-space: nowrap; z-index: 5;
+}
+.cb-line {
+  display: block; height: 1px; width: 120px;
+  background: linear-gradient(90deg, transparent, var(--clr-red-border), transparent);
+}
+.cb-text {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.35em; color: var(--clr-red-bright);
+  display: flex; align-items: center; gap: 0.7rem; opacity: 0.8;
+}
+
+/* ─── MAIN TITLE: "CRIMINAL CASE FILES" on one line ─── */
+.archive-hero-content { position: relative; z-index: 2; }
+
+.archive-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.25em;
+  line-height: 0.9;
+  margin-bottom: 1.1rem;
+  flex-wrap: wrap;
+}
+
+/* "CRIMINAL" — white, large */
+.title-criminal {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 11.5vw, 10.5rem);
+  letter-spacing: 0.04em;
+  color: #e8e6df;
+  /* Subtle horizontal stripe texture via repeating gradient */
+  background: repeating-linear-gradient(
+    180deg,
+    #e8e6df 0px,
+    #e8e6df 3px,
+    rgba(232,230,223,0.82) 3px,
+    rgba(232,230,223,0.82) 6px
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fade-up 0.7s 0.1s ease both;
+}
+
+/* "CASE FILES" — red glow */
+.title-case-files {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 11.5vw, 10.5rem);
+  letter-spacing: 0.04em;
+  color: var(--clr-red-bright);
+  text-shadow: var(--glow-red);
+  animation: fade-up 0.7s 0.2s ease both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── TAGLINE ─── */
+.hero-tagline {
+  font-family: var(--font-mono);
+  font-size: clamp(0.58rem, 1.3vw, 0.72rem);
+  letter-spacing: 0.28em;
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0;
+  animation: fade-up 0.7s 0.35s ease both;
+}
+.hero-tagline em {
+  color: var(--clr-red-bright);
+  font-style: normal;
+}
+
+/* ════════════════════════════════════════
+   CASE GRID SECTION
+   ════════════════════════════════════════ */
+.case-selection {
+  position: relative;
+  width: 100%;
+  padding: 0 clamp(1.5rem, 4vw, 4rem) clamp(4rem, 7vw, 6rem);
+  background: var(--clr-bg);
+}
+
+.case-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2.5vw, 1.8rem);
+}
+
+/* ════════════════════════════════════════
+   CASE CARD — exact reference match
+   ════════════════════════════════════════ */
+.case-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  background: var(--clr-bg-card);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+
+  /* enter animation */
+  opacity: 0;
+  transform: translateY(18px);
+  animation: card-in 0.55s ease forwards;
+}
+.case-card:nth-child(1) { animation-delay: 0.05s; }
+.case-card:nth-child(2) { animation-delay: 0.15s; }
+.case-card:nth-child(3) { animation-delay: 0.25s; }
+.case-card:nth-child(4) { animation-delay: 0.35s; }
+@keyframes card-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hover lift */
+.case-card:hover {
+  border-color: rgba(200,0,28,0.45);
+  box-shadow: 0 0 0 1px rgba(200,0,28,0.2), 0 24px 60px rgba(0,0,0,0.7);
+  transform: translateY(-3px);
+}
+
+/* ─── Red corner accent top-left ─── */
+.case-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 32px; height: 32px;
+  border-top: 1.5px solid var(--clr-red-bright);
+  border-left: 1.5px solid var(--clr-red-bright);
+  border-radius: 10px 0 0 0;
+  z-index: 5;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.case-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 32px; height: 32px;
+  border-bottom: 1.5px solid var(--clr-red-bright);
+  border-right: 1.5px solid var(--clr-red-bright);
+  border-radius: 0 0 10px 0;
+  z-index: 5;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.case-card:hover::before,
+.case-card:hover::after { opacity: 1; }
+
+/* ─── THUMBNAIL (left column) ─── */
+.case-thumb-wrap {
+  position: relative;
+  background: var(--clr-bg-thumb);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+}
+
+/* Dark vignette over thumb */
+.case-thumb-wrap::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55)),
+    linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+  pointer-events: none;
+}
+
+/* The actual image */
+.case-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  filter: grayscale(0.3) brightness(0.65) contrast(1.1);
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+.case-card:hover .case-thumb-img {
+  filter: grayscale(0) brightness(0.7) contrast(1.15);
+  transform: scale(1.04);
+}
+
+/* Fallback icon when no image */
+.case-thumb-icon {
+  position: relative;
+  z-index: 1;
+  font-size: 3.5rem;
+  opacity: 0.12;
+  color: var(--clr-text);
+  user-select: none;
+  transition: opacity 0.3s;
+}
+.case-card:hover .case-thumb-icon { opacity: 0.18; }
+
+/* Thin red scan line on thumb */
+.case-thumb-scanline {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--clr-red-bright), transparent);
+  opacity: 0;
+  top: 50%;
+  z-index: 4;
+  transition: opacity 0.3s;
+  box-shadow: 0 0 8px var(--clr-red-bright);
+}
+.case-card:hover .case-thumb-scanline { opacity: 0.6; }
+
+/* ─── CARD BODY (right column) ─── */
+.case-body {
+  padding: 1.5rem 1.6rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Fine grid texture on card body */
+.case-body::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.013) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.013) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+/* ─── Case number label (top-left of card) ─── */
+.case-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+.case-number {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+}
+/* Highlight the number part in brighter */
+.case-number span { color: var(--clr-red-bright); opacity: 0.85; }
+
+/* ─── TITLE: two lines, white + red ─── */
+.case-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.9;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+.case-title-top {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  letter-spacing: 0.05em;
+  color: #e8e6df;
+}
+.case-title-bottom {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  letter-spacing: 0.04em;
+  color: var(--clr-red-bright);
+  text-shadow: var(--glow-red-sm);
+  line-height: 0.88;
+}
+
+/* ─── DESCRIPTION ─── */
+.case-description {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--clr-text-dim);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 1.3rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── BEGIN INVESTIGATION BUTTON ─── */
+.case-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--clr-red-bright);
+  background: transparent;
+  border: 1px solid var(--clr-red-border);
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: color 0.28s ease, border-color 0.28s ease;
+}
+
+/* Red sweep fill on hover */
+.case-btn::before {
+  content: "";
+  position: absolute; inset: 0; left: -100%;
+  background: var(--clr-red-bright);
+  transition: left 0.28s ease;
+  z-index: -1;
+}
+.case-btn:hover::before { left: 0; }
+.case-btn:hover { color: #fff; border-color: var(--clr-red-bright); }
+
+.case-btn-arrow {
+  font-size: 0.8rem;
+  transition: transform 0.28s ease;
+}
+.case-btn:hover .case-btn-arrow { transform: translateX(4px); }
+
+
+/* ════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════ */
+.site-footer {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  background: var(--clr-bg);
+  padding: 1.2rem clamp(1.5rem, 4vw, 4rem);
+  margin-top: 1rem;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.6rem;
+  font-family: var(--font-mono); font-size: 0.56rem;
+  letter-spacing: 0.16em; color: var(--clr-text-faint);
+}
+.footer-logo { color: var(--clr-text-dim); }
+.footer-ver  { color: rgba(184,154,74,0.7); }
+.footer-copy { opacity: 0.4; }
+.status-live { color: var(--clr-red-bright); text-shadow: var(--glow-red-sm); }
+
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .case-grid { grid-template-columns: 1fr; }
+  .case-card { grid-template-columns: 160px 1fr; }
+}
+@media (max-width: 600px) {
+  .case-card { grid-template-columns: 1fr; }
+  .case-thumb-wrap { height: 160px; min-height: unset; }
+  .title-criminal, .title-case-files { font-size: clamp(3rem, 16vw, 5.5rem); }
+  .archive-hero { padding-top: 5rem; }
 }
